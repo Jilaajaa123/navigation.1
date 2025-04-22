@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MaterialApp(title: 'Navigation Basics', home: FirstRoute()));
+  runApp(const MaterialApp(
+      title: 'Navigation 2 - Kirim Data', home: FirstRoute()));
 }
 
 class FirstRoute extends StatelessWidget {
@@ -40,10 +41,14 @@ class FirstRoute extends StatelessWidget {
               ElevatedButton(
                 child: const Text('Login'),
                 onPressed: () {
+                  String email = emailController.text;
+
+                  // Kirim data ke halaman kedua
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const SecondRoute()),
+                      builder: (context) => SecondRoute(username: email),
+                    ),
                   );
                 },
               ),
@@ -56,18 +61,30 @@ class FirstRoute extends StatelessWidget {
 }
 
 class SecondRoute extends StatelessWidget {
-  const SecondRoute({super.key});
+  final String username;
+
+  const SecondRoute({super.key, required this.username});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Second Route')),
+      appBar: AppBar(title: const Text('Welcome Page')),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Logout!'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'welcome, $username!',
+              style: const TextStyle(fontSize: 20),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Logout'),
+            ),
+          ],
         ),
       ),
     );
